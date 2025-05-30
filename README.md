@@ -1,6 +1,5 @@
-# Setting up Raspberry Pi 4
-1. Change the "country", "ssid" (WIFI name), and "psk" (WIFI Password) whenever you change WIFI
-2. Copy "ssh" and "wpa_supplicant.conf" to sd card 
+# My WAVEGO essential information
+- Raspberry Pi IP address: 172.17.31.24 (MANIKE)
 
 # Core Functions
 
