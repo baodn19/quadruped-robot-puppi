@@ -1,5 +1,5 @@
 # My WAVEGO essential information
-- Raspberry Pi IP address: 172.17.31.24 (MANIKE)
+- Raspberry Pi IP address: 192.168.4.2
 
 # Core Functions
 
