@@ -1,33 +1,29 @@
-#include "Servo1.h"        //导入库函数Servo1.h
+#include "Servo1.h"
 
-TwoWire IIC = TwoWire(0);                   //初始化IIC的IO口
-Servo1 pwm = Servo1(0x40, IIC);  //实例化pwm
+TwoWire I2C = TwoWire(0);
+Servo1 pwm = Servo1(PCA9685_I2C_ADDRESS, I2C);
+#define SCL_PIN 33
+#define SDA_PIN 32
+#define SERVO_REFRESH_RATE 50 // Hz
 
-#define S_SCL   33                //定义时钟线的IO口为GPIO33
-#define S_SDA   32                //定义数据线的IO口为GPIO32
-
-#define LEG0 0
-#define LEG1 1
-
-#define SERVO_FREQ 50
-
-void ServoSetup(){                 
-  IIC.begin(S_SDA, S_SCL, 26000000);        //打开IIC通道
-  pwm.begin();
-  pwm.setOscillatorFrequency(26000000);     
-  pwm.setPWMFreq(SERVO_FREQ);            //刷新频率为50Hz
-  Wire.setClock(100000);               //修改IIC的时钟频率为100KHz
-  delay(10);
+void InitiateServo() {
+  I2C.begin(SDA_PIN, SCL_PIN, 26000000); // Initialize I2C with SDA and SCL pins
+  pwm.begin(); // Initialize the PCA9685
+  pwm.setOscillatorFrequency(26000000); // Set the oscillator frequency
+  pwm.setPWMFreq(SERVO_REFRESH_RATE); // Set the PWM frequency for servos
+  Wire.setClock(100000); // Set I2C clock speed to 100kHz
+  delay(10); // Allow time for the PCA9685 to initialize
 }
 
 void setup() {
-  ServoSetup();
-  pwm.setPWM(1,0,386);       //为防止0号舵机摆动过程被1号舵机阻碍，需先将1号舵机设置到一定的角度给0号舵机预留空间
+  InitiateServo(); // Call the function to initialize the servo
+  pwm.setPWM(1, 0, 386);
 }
 
 void loop() {
-  pwm.setPWM(0,0,286);
+  // Swing within 45 degrees range
+  pwm.setPWM(0, 0, 286); 
   delay(500);
-  pwm.setPWM(0,0,386);
-  delay(500);
+  pwm.setPWM(0, 0, 386); 
+  delay(500); 
 }
