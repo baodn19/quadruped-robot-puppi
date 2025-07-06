@@ -21,7 +21,7 @@ void setup() {
 }
 
 void loop() {
-  // Swing within 45 degrees range
+  // Swing within 45 degrees range  
   pwm.setPWM(0, 0, 286); 
   delay(500);
   pwm.setPWM(0, 0, 386); 
