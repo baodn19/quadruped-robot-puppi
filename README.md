@@ -2,12 +2,20 @@
 - SSH into Raspberry Pi: `ssh baodn19@<IP>`
 
 # Core Functions
-## Control basic movement:
+## Control basic movement with ESP32:
 - In loop() of `WAVEGO.ino`:
     - Front: moveFB = 1;
     - Back: moveFB = -1;
     - Right: moveLR = 1;
     - Left: moveLR = -1;
+
+## Control basic movement with Raspberry Pi:
+- In `__main__` of `robot.py`:
+``` cpp
+<action>()
+time.sleep(<duration>)
+<stopAction>()
+```
 
 ## Startup the camera: [Camera Sofware](https://www.raspberrypi.com/documentation/computers/camera_software.html#building-libcamera-and-rpicam-apps)
 
