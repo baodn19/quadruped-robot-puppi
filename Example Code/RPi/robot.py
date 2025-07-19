@@ -127,9 +127,6 @@ def buzzerCtrl(buzzerCtrl, cmdInput):
 
 
 if __name__ == '__main__':
-    # robotCtrl.moveStart(100, 'forward', 'no', 0)
-    # time.sleep(3)
-    # robotCtrl.moveStop()
-    while 1:
-        time.sleep(1)
-        pass
+	backward()
+	time.sleep(2)
+	stopFB()
