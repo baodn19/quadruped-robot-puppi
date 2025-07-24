@@ -24,7 +24,11 @@ cv2.createTrackbar("VAL Min", "HSV", 0, 255, empty)
 cv2.createTrackbar("VAL Max", "HSV", 255, 255, empty)
 
 while True:
-    _, image = capture.read()
+    ret, image = capture.read()
+    if not ret: # Check if the frame was successfully read
+        print("Error: Failed to capture frame from camera.")
+        break # Exit the loop if frame capture fails
+
     image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Read HSV values from track bars
