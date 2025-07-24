@@ -25,9 +25,15 @@ cv2.createTrackbar("VAL Max", "HSV", 255, 255, empty)
 
 while True:
     ret, image = capture.read()
-    if not ret: # Check if the frame was successfully read
-        print("Error: Failed to capture frame from camera.")
-        break # Exit the loop if frame capture fails
+    
+    # Set resolution *before* checking if the camera is opened
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
+
+    # IMPORTANT: Check if the camera is actually opened
+    if not capture.isOpened():
+        print("Error: Could not open video stream.")
+        exit()
 
     print(f"Attempting to set resolution to: {frame_width}x{frame_height}")
     print(f"Actual resolution after setting: {capture.get(cv2.CAP_PROP_FRAME_WIDTH)}x{capture.get(cv2.CAP_PROP_FRAME_HEIGHT)}")
