@@ -29,6 +29,9 @@ while True:
         print("Error: Failed to capture frame from camera.")
         break # Exit the loop if frame capture fails
 
+    print(f"Attempting to set resolution to: {frame_width}x{frame_height}")
+    print(f"Actual resolution after setting: {capture.get(cv2.CAP_PROP_FRAME_WIDTH)}x{capture.get(cv2.CAP_PROP_FRAME_HEIGHT)}")
+
     image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Read HSV values from track bars
