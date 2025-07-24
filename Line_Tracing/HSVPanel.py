@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import time
 
 frame_width = 640
 frame_height = 480
@@ -7,6 +8,7 @@ frame_height = 480
 capture = cv2.VideoCapture(0)
 capture.set(3, frame_width)
 capture.set(4, frame_height)
+time.sleep(2)  # Allow camera to warm up
 
 def empty(a):
     pass
