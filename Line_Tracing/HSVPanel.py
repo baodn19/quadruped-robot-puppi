@@ -5,7 +5,7 @@ import time
 frame_width = 640
 frame_height = 480
 
-capture = cv2.VideoCapture(0)
+capture = cv2.VideoCapture(0 + cv2.CAP_V4L2)
 capture.set(3, frame_width)
 capture.set(4, frame_height)
 time.sleep(2)  # Allow camera to warm up
