@@ -1,13 +1,18 @@
 import cv2
 import numpy as np
 import time
+import picamera2 as pc2
 
 frame_width = 640
 frame_height = 480
 
 capture = cv2.VideoCapture(0 + cv2.CAP_V4L2)
-capture.set(3, frame_width)
-capture.set(4, frame_height)
+# capture.set(3, frame_width)
+# capture.set(4, frame_height)
+
+camera = pc2.Picamera2()
+camera.configure(camera.create_preview_configuration(main={"size": (frame_width, frame_height)}))
+camera.start()
 time.sleep(2)  # Allow camera to warm up
 
 def empty(a):
@@ -24,17 +29,7 @@ cv2.createTrackbar("VAL Min", "HSV", 0, 255, empty)
 cv2.createTrackbar("VAL Max", "HSV", 255, 255, empty)
 
 while True:
-    ret, image = capture.read()
-    
-    print(cv2.getBuildInformation())
-
-    # IMPORTANT: Check if the camera is actually opened
-    if not ret:
-        print("Error: Could not open video stream.")
-        exit()
-
-    print(f"Attempting to set resolution to: {frame_width}x{frame_height}")
-    print(f"Actual resolution after setting: {capture.get(cv2.CAP_PROP_FRAME_WIDTH)}x{capture.get(cv2.CAP_PROP_FRAME_HEIGHT)}")
+    image = camera.capture_array()
 
     image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
