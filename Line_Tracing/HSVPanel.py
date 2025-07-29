@@ -31,7 +31,7 @@ while True:
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
 
     # IMPORTANT: Check if the camera is actually opened
-    if not capture.isOpened():
+    if not ret:
         print("Error: Could not open video stream.")
         exit()
 
