@@ -26,9 +26,7 @@ cv2.createTrackbar("VAL Max", "HSV", 255, 255, empty)
 while True:
     ret, image = capture.read()
     
-    # Set resolution *before* checking if the camera is opened
-    capture.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
-    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
+    print(cv2.getBuildInformation())
 
     # IMPORTANT: Check if the camera is actually opened
     if not ret:
