@@ -6,7 +6,7 @@ import picamera2 as pc2
 frame_width = 640
 frame_height = 480
 
-capture = cv2.VideoCapture(0 + cv2.CAP_V4L2)
+# capture = cv2.VideoCapture(0 + cv2.CAP_V4L2)
 # capture.set(3, frame_width)
 # capture.set(4, frame_height)
 
@@ -56,5 +56,5 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-capture.release()
+camera.stop()
 cv2.destroyAllWindows()
