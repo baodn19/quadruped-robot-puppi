@@ -29,8 +29,9 @@ cv2.createTrackbar("VAL Min", "HSV", 0, 255, empty)
 cv2.createTrackbar("VAL Max", "HSV", 255, 255, empty)
 
 while True:
-    image = camera.capture_array()
+    frame_rgb = camera.capture_array()
 
+    image = cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2BGR)
     image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Read HSV values from track bars
