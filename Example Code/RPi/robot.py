@@ -127,6 +127,6 @@ def buzzerCtrl(buzzerCtrl, cmdInput):
 
 
 if __name__ == '__main__':
-	backward()
+	lookDown()
 	time.sleep(2)
-	stopFB()
+	lookStopUD()
