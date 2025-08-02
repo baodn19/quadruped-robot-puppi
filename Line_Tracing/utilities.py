@@ -86,7 +86,7 @@ def draw_points(image, points):
     """
     image = image.copy()
 
-    for point in points:
-        cv2.circle(image, tuple(point), 15, (0, 255, 0), cv2.FILLED)
+    for i in range(4):
+        cv2.circle(image, (int(points[i][0]), int(points[i][1])), 15, (0, 255, 0), cv2.FILLED)
 
     return image
