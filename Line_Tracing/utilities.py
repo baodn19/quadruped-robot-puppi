@@ -31,7 +31,7 @@ def perspective_warp(image, points, width, height):
     """
 
     source_points = np.float32(points)
-    destination_points = np.float32([[0, 0], [width, 0], [width, height], [0, height]])
+    destination_points = np.float32([[0, 0], [width, 0], [0, height], [width, height]])
 
     matrix = cv2.getPerspectiveTransform(source_points, destination_points)
     warped_image = cv2.warpPerspective(image, matrix, (width, height))
