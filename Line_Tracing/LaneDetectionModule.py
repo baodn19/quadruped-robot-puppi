@@ -11,11 +11,12 @@ def get_lane_curve(image):
     image_warped = ut.perspective_warp(image, points, width, height)
     image_points = ut.draw_points(image, points)
 
-    ut.histogram_analysis(image_warped)
+    base_point, image_histogram = ut.histogram_analysis(image_warped, display_chart=True)
 
-    cv2.imshow("Thresholded Image", image_threshold)
-    cv2.imshow("Warped Image", image_warped)
-    cv2.imshow("Pointed Image", image_points)
+    # cv2.imshow("Thresholded Image", image_threshold)
+    # cv2.imshow("Warped Image", image_warped)
+    # cv2.imshow("Pointed Image", image_points)
+    cv2.imshow("Histogram", image_histogram)
 
     return None
 

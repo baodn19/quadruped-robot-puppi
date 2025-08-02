@@ -91,12 +91,13 @@ def draw_points(image, points):
 
     return image
 
-def histogram_analysis(image, minimum_percentage=0.1):
+def histogram_analysis(image, minimum_percentage=0.1, display_chart=False):
     """
     Description: Analyzes the histogram of the image to find the lane lines.
     Parameters:
     - image: Input warped image
     - minimum_percentage: Minimum percentage of pixels to consider a lane line.
+    - display_chart: Whether to display the histogram chart.
     """
 
     histogram_values = np.sum(image, axis=0)
@@ -106,4 +107,13 @@ def histogram_analysis(image, minimum_percentage=0.1):
 
     line_index = np.where(histogram_values >= minimum_value)
     base_point = int(np.average(line_index))
-    print(base_point)
+    
+    if display_chart:
+        image_histogram = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint8)
+        for i, intensity in enumerate(histogram_values):
+            cv2.line(image_histogram, (i, image.shape[0]), (i, image.shape[0] - intensity // 255), (255, 0, 0), 1)
+            cv2.circle(image_histogram, (base_point, image.shape[0]), 20, (0, 255, 0), cv2.FILLED)
+
+        return base_point, image_histogram
+    
+    return base_point
