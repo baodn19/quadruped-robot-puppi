@@ -111,7 +111,7 @@ def histogram_analysis(image, minimum_percentage=0.1, display_chart=False):
     if display_chart:
         image_histogram = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint8)
         for i, intensity in enumerate(histogram_values):
-            cv2.line(image_histogram, (i, image.shape[0]), (i, int(image.shape[0] - intensity / 255)), (255, 0, 0), 1)
+            cv2.line(image_histogram, (i, image.shape[0]), (i, int((image.shape[0] - intensity) // 255)), (255, 0, 0), 1)
             cv2.circle(image_histogram, (base_point, image.shape[0]), 20, (0, 255, 0), cv2.FILLED)
 
         return base_point, image_histogram
