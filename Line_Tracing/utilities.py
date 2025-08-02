@@ -76,3 +76,17 @@ def trackbars_value(width_target=480, height_target=240):
     ])
 
     return points
+
+def draw_points(image, points):
+    """
+    Description: Draws the points on the image for visualization.
+    Parameters:
+    - image: Input image in BGR format.
+    - points: List of four points to draw.
+    """
+    image = image.copy()
+
+    for point in points:
+        cv2.circle(image, tuple(point), 15, (0, 255, 0), cv2.FILLED)
+
+    return image
