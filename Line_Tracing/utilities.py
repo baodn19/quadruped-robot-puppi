@@ -90,3 +90,13 @@ def draw_points(image, points):
         cv2.circle(image, (int(points[i][0]), int(points[i][1])), 15, (0, 255, 0), cv2.FILLED)
 
     return image
+
+def histogram_analysis(image):
+    """
+    Description: Analyzes the histogram of the image to find the lane lines.
+    Parameters:
+    - image: Input warped image
+    """
+
+    histogram_values = np.sum(image, axis=0)
+    print(histogram_values)
