@@ -20,7 +20,7 @@ def get_lane_curve(image):
 if __name__ == "__main__":
     capture = cv2.VideoCapture("vid1.mp4")
 
-    initial_trackbar_values = [100, 100, 100, 100]  # Initial values for the trackbars
+    initial_trackbar_values = [53, 204, 78, 131]  # Initial values for the trackbars
     ut.initialize_trackbars(initial_trackbar_values)
     frame_counter = 0
 
