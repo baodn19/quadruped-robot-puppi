@@ -8,7 +8,7 @@ def get_lane_curve(image):
 
     height, width = image.shape[:2]
     points = ut.trackbars_value()
-    image_warped = ut.perspective_warp(image_threshold, points, width, height)
+    image_warped = ut.perspective_warp(image, points, width, height)
     image_points = ut.draw_points(image, points)
 
     cv2.imshow("Thresholded Image", image_threshold)
