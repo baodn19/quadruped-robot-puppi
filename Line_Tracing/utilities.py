@@ -106,14 +106,25 @@ def histogram_analysis(image, minimum_percentage=0.1, display_chart=False):
     minimum_value = max_value * minimum_percentage
 
     line_index = np.where(histogram_values >= minimum_value)
-    base_point = int(np.average(line_index))
+    if len(line_index[0]) > 0:
+        base_point = int(np.average(line_index))
+    else:
+        # Handle the case where no line is detected to avoid an error
+        base_point = 0 
     
     if display_chart:
         image_histogram = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint8)
         for i, intensity in enumerate(histogram_values):
-            cv2.line(image_histogram, (i, image.shape[0]), (i, int(image.shape[0] - intensity // 255)), (255, 0, 0), 1)
-            cv2.circle(image_histogram, (base_point, image.shape[0]), 20, (0, 255, 0), cv2.FILLED)
+            # Cast the y-coordinate to an integer to ensure it's the correct type
+            y_coord = int(image.shape[0] - intensity // 255)
+            cv2.line(image_histogram, (i, int(image.shape[0])), (i, y_coord), (255, 0, 0), 1)
+        
+        # Ensure base_point is also an integer before drawing the circle
+        cv2.circle(image_histogram, (int(base_point), int(image.shape[0])), 20, (0, 255, 0), cv2.FILLED)
 
         return base_point, image_histogram
+    
+    if len(line_index[0]) == 0:
+        return 0 # Return 0 or an appropriate value if no line is found
     
     return base_point
