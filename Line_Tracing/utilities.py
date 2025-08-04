@@ -103,7 +103,7 @@ def histogram_analysis(image, minimum_percentage=0.1, display_chart=False, perce
     if percentage_region_analyzed == 1:
         histogram_values = np.sum(image, axis=0)
     else:
-        histogram_values = np.sum(image[image.shape[0] * percentage_region_analyzed:, :], axis=0)
+        histogram_values = np.sum(image[int(image.shape[0] * percentage_region_analyzed):, :], axis=0)
 
     max_value = np.max(histogram_values)
     minimum_value = max_value * minimum_percentage
