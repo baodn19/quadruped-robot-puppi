@@ -158,7 +158,7 @@ def stack_images(scale, image_array):
                         horizontal[x] = np.hstack(image_array[x])
                     vertical = np.vstack(horizontal)
                 else:
-                    for x in range(0, rows):
+                    for x in range(rows):
                         if image_array[x].shape[:2] == image_array[0].shape[:2]:
                             image_array[x] = cv2.resize(image_array[x], (0,0), None, scale, scale)
                         else:
