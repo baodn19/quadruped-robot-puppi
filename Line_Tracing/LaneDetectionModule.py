@@ -54,12 +54,8 @@ def get_lane_curve(image, display=2):
     elif display == 1:
         cv2.imshow("Lane Curve", image_result)
 
-    # cv2.imshow("Thresholded Image", image_threshold)
-    # cv2.imshow("Warped Image", image_warped)
-    # cv2.imshow("Pointed Image", image_points)
-    cv2.imshow("Histogram", image_histogram)
 
-    return None
+    return average_curve
 
 if __name__ == "__main__":
     capture = cv2.VideoCapture("vid1.mp4")
@@ -78,5 +74,4 @@ if __name__ == "__main__":
         image = cv2.resize(image, (480, 240))
         get_lane_curve(image) 
 
-        cv2.imshow("Video", image)
         cv2.waitKey(1)
