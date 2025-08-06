@@ -14,15 +14,15 @@ def threshold(image):
     image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Define thresholds for white color in HSV
-    lower_white = np.array([80, 0, 0])
-    upper_white = np.array([255, 160, 255])
-    # lower_white = np.array([92, 0, 16])
-    # upper_white = np.array([148, 255, 126])
+    # lower_white = np.array([80, 0, 0])
+    # upper_white = np.array([255, 160, 255])
+    lower_white = np.array([92, 0, 16])
+    upper_white = np.array([148, 255, 126])
     mask_white = cv2.inRange(image_hsv, lower_white, upper_white)
 
     return mask_white
 
-def perspective_warp(image, points, width, height):
+def perspective_warp(image, points, width, height, inverse=False):
     """
     Description: Applies a perspective warp to the image based on the given points.
     Parameters:
@@ -30,12 +30,16 @@ def perspective_warp(image, points, width, height):
     - points: List of four points defining the region to warp.
     - width: Width of the output image.
     - height: Height of the output image.
+    - inverse: If True, applies the inverse perspective warp.
     """
 
     source_points = np.float32(points)
     destination_points = np.float32([[0, 0], [width, 0], [0, height], [width, height]])
 
-    matrix = cv2.getPerspectiveTransform(source_points, destination_points)
+    if inverse:
+        matrix = cv2.getPerspectiveTransform(destination_points, source_points)
+    else:
+        matrix = cv2.getPerspectiveTransform(source_points, destination_points)
     warped_image = cv2.warpPerspective(image, matrix, (width, height))
 
     return warped_image
