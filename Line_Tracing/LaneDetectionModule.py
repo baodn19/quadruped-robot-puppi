@@ -54,7 +54,6 @@ def get_lane_curve(image, display=2):
     elif display == 1:
         cv2.imshow("Lane Curve", image_result)
 
-
     return average_curve
 
 if __name__ == "__main__":
