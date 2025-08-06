@@ -48,8 +48,8 @@ def get_lane_curve(image, display=2):
             w = width // 20
             cv2.line(image_result, (w * x + int(average_curve // 50), middle_y - 10), (w * x + int(average_curve // 50), middle_y + 10), (0, 0, 255), 2)
     if display == 2:
-        image_stacked = ut.stack_images(0.7, ([image, image_points, image_warped], 
-                                              [image_histogram, image_lane_color, image_result]))
+        image_stacked = ut.stack_images(0.7, np.array([[image, image_points, image_warped], 
+                                              [image_histogram, image_lane_color, image_result]]))
         cv2.imshow("Lane Detection", image_stacked)
     elif display == 1:
         cv2.imshow("Lane Curve", image_result)
