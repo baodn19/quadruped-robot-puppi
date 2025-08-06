@@ -14,10 +14,10 @@ def threshold(image):
     image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Define thresholds for white color in HSV
-    lower_white = np.array([80, 0, 0])
-    upper_white = np.array([255, 160, 255])
-    # lower_white = np.array([92, 0, 16])
-    # upper_white = np.array([148, 255, 126])
+    # lower_white = np.array([80, 0, 0])
+    # upper_white = np.array([255, 160, 255])
+    lower_white = np.array([92, 0, 16])
+    upper_white = np.array([148, 255, 126])
     mask_white = cv2.inRange(image_hsv, lower_white, upper_white)
 
     return mask_white
@@ -93,7 +93,7 @@ def draw_points(image, points):
 
     return image
 
-def histogram_analysis(image, minimum_percentage=0.1, display_chart=False, percentage_region_analyzed=1):
+def histogram_analysis(image, minimum_percentage=0.1, display_chart=False, percentage_region_analyzed=100):
     """
     Description: Analyzes the histogram of the image to find the lane lines.
     Parameters:
@@ -105,7 +105,7 @@ def histogram_analysis(image, minimum_percentage=0.1, display_chart=False, perce
     if percentage_region_analyzed == 1:
         histogram_values = np.sum(image, axis=0)
     else:
-        histogram_values = np.sum(image[int(image.shape[0] * percentage_region_analyzed):, :], axis=0)
+        histogram_values = np.sum(image[int(image.shape[0] * percentage_region_analyzed / 100):, :], axis=0)
 
     max_value = np.max(histogram_values)
     minimum_value = max_value * minimum_percentage
@@ -116,7 +116,7 @@ def histogram_analysis(image, minimum_percentage=0.1, display_chart=False, perce
     if display_chart:
         image_histogram = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint8)
         for i, intensity in enumerate(histogram_values):
-            cv2.line(image_histogram, (i, image.shape[0]), (i, int(image.shape[0] - intensity // 255 * percentage_region_analyzed)), (255, 0, 0), 1)
+            cv2.line(image_histogram, (i, image.shape[0]), (i, int(image.shape[0] - intensity // 255 * percentage_region_analyzed / 100)), (255, 0, 0), 1)
             cv2.circle(image_histogram, (base_point, image.shape[0]), 20, (0, 255, 0), cv2.FILLED)
 
         return base_point, image_histogram

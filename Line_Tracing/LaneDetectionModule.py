@@ -11,7 +11,9 @@ def get_lane_curve(image):
     image_warped = ut.perspective_warp(image_threshold, points, width, height)
     image_points = ut.draw_points(image, points)
 
-    base_point, image_histogram = ut.histogram_analysis(image_warped, display_chart=True, minimum_percentage=0.5, percentage_region_analyzed=0.25)
+    middle_point, image_histogram = ut.histogram_analysis(image_warped, display_chart=True, minimum_percentage=0.5, percentage_region_analyzed=25)
+    base_point = ut.histogram_analysis(image_warped, minimum_percentage=0.9) # minimum percentage of 0.9 to find the most prominent lane line as the initial point
+    print(base_point - middle_point)
 
     # cv2.imshow("Thresholded Image", image_threshold)
     # cv2.imshow("Warped Image", image_warped)
