@@ -8,10 +8,10 @@ def thresholding(img):
     maskWhite = cv2.inRange(imgHsv,lowerWhite,upperWhite)
     return maskWhite
  
-def warpImg(img,points,w,h,inv = False):
+def warpImg(img,points,w,h,inverse = False):
     pts1 = np.float32(points)
     pts2 = np.float32([[0,0],[w,0],[0,h],[w,h]])
-    if inv:
+    if inverse:
         matrix = cv2.getPerspectiveTransform(pts2, pts1)
     else:
         matrix = cv2.getPerspectiveTransform(pts1,pts2)
