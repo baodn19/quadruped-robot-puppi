@@ -78,7 +78,7 @@ if __name__ == "__main__":
         frame_counter += 1
 
         image = camera.capture_array()
-        image = cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2BGR)
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         get_lane_curve(image) 
 
         cv2.waitKey(1)
