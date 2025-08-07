@@ -12,6 +12,8 @@ def get_lane_curve(image, display=2):
     - image (numpy.3darray): The input image from which lane curves are to be detected.
     - display (int): The display mode for the output. Default is 2, which shows the everything.1 shows the resulting curve, and 0 shows nothing.
     """
+    image_result = image.copy()
+
     image_threshold = ut.threshold(image)
 
     # Generate different images for perspective warp 
