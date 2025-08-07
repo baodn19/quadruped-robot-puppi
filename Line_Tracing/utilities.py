@@ -16,8 +16,8 @@ def threshold(image):
     # Define thresholds for white color in HSV
     # lower_white = np.array([80, 0, 0])
     # upper_white = np.array([255, 160, 255])
-    lower_white = np.array([92, 0, 16])
-    upper_white = np.array([148, 255, 126])
+    lower_white = np.array([55, 6, 5])
+    upper_white = np.array([179, 178, 172])
     mask_white = cv2.inRange(image_hsv, lower_white, upper_white)
 
     return mask_white
