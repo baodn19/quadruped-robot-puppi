@@ -33,7 +33,7 @@ def get_lane_curve(image, display=2):
 
     # Display the results based on the display mode
     if display != 0:
-        image_inverse_warped = utlis.warpImg(image_warped, points, width, height, inverse=True)
+        image_inverse_warped = ut.warpImg(image_warped, points, width, height, inverse=True)
         image_inverse_warped = cv2.cvtColor(image_inverse_warped, cv2.COLOR_GRAY2BGR)
         image_inverse_warped[0:height // 3, 0:width] = 0, 0, 0
         image_lane_color = np.zeros_like(image)
@@ -51,8 +51,8 @@ def get_lane_curve(image, display=2):
         #fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer);
         #cv2.putText(imgResult, 'FPS ' + str(int(fps)), (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (230, 50, 50), 3);
     if display == 2:
-        image_stacked = utlis.stackImages(0.7, ([image, imgWarpPoints, image_warped],
-                                             [imgHist, image_lane_color, image_result]))
+        image_stacked = ut.stackImages(0.7, ([image, image_points, image_warped],
+                                             [image_histogram, image_lane_color, image_result]))
         cv2.imshow('ImageStack', image_stacked)
     elif display == 1:
         cv2.imshow('Resutlt', image_result)
