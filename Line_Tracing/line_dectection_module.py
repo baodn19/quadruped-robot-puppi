@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import utilities as ut
+import camera_module as cam
 
 curve_list = []
 average_curve_value = 10  # Number of frames to average the curve over
@@ -67,7 +68,7 @@ def get_lane_curve(image, display=2):
     return average_curve
 
 if __name__ == "__main__":
-    capture = cv2.VideoCapture("vid1.mp4")
+    camera = cam.initialize_camera(480, 240)
 
     initial_trackbar_values = [53, 204, 78, 131]  # Initial values for the trackbars
     ut.initialize_trackbars(initial_trackbar_values)
@@ -75,12 +76,8 @@ if __name__ == "__main__":
 
     while True:
         frame_counter += 1
-        if capture.get(cv2.CAP_PROP_FRAME_COUNT) == frame_counter:
-            capture.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            frame_counter = 0
 
-        success, image = capture.read()
-        image = cv2.resize(image, (480, 240))
+        image = camera.capture_array()
         get_lane_curve(image) 
 
         cv2.waitKey(1)
