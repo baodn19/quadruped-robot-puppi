@@ -11,7 +11,7 @@ def initialize_camera(width=640, height=480):
     - camera: Initialized camera object.
     """
     camera = pc2.Picamera2()
-    camera.configure(camera.create_preview_configuration(main={"size": (640, 480)}))
+    camera.configure(camera.create_preview_configuration(main={"size": (width, height)}))
     camera.start()
     time.sleep(2)  # Allow camera to warm up
     
