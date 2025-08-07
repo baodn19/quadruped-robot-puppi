@@ -136,35 +136,30 @@ def stack_images(scale, image_array):
     """
 
     rows = len(image_array)
-    cols = len(image_array[0])
+    columns = len(image_array[0])
     rows_available = isinstance(image_array[0], list)
-    
     width = image_array[0][0].shape[1]
     height = image_array[0][0].shape[0]
-
     if rows_available:
-        for i in range(rows):
-            for j in range(cols):
-                if image_array[i][j].shape[:2] == image_array[0][0].shape[:2] :
-                    image_array[i][j] = cv2.resize(image_array[i][j], (0,0), None, scale, scale)
+        for x in range ( 0, rows):
+            for y in range(0, columns):
+                if image_array[x][y].shape[:2] == image_array[0][0].shape [:2]:
+                    image_array[x][y] = cv2.resize(image_array[x][y], (0, 0), None, scale, scale)
                 else:
-                    image_array[i][j] = cv2.resize(image_array[i][j], (image_array[0][0].shape[1], image_array[0][0].shape[0]), None, scale, scale)
-            
-                if len(image_array[i][j].shape) == 2: image_array[i][j] = cv2.cvtColor(image_array[i][j], cv2.COLOR_GRAY2BGR)                    
+                    image_array[x][y] = cv2.resize(image_array[x][y], (image_array[0][0].shape[1], image_array[0][0].shape[0]), None, scale, scale)
+                if len(image_array[x][y].shape) == 2: image_array[x][y]= cv2.cvtColor( image_array[x][y], cv2.COLOR_GRAY2BGR)
         blank_image = np.zeros((height, width, 3), np.uint8)
-        horizontal = [blank_image] * rows
-        for x in range(rows):
+        horizontal = [blank_image]*rows
+        for x in range(0, rows):
             horizontal[x] = np.hstack(image_array[x])
         vertical = np.vstack(horizontal)
     else:
-        for x in range(rows):
+        for x in range(0, rows):
             if image_array[x].shape[:2] == image_array[0].shape[:2]:
-                image_array[x] = cv2.resize(image_array[x], (0,0), None, scale, scale)
+                image_array[x] = cv2.resize(image_array[x], (0, 0), None, scale, scale)
             else:
-                image_array[x] = cv2.resize(image_array[x], (image_array[0].shape[1], image_array[0].shape[0]), None, scale, scale)
-            
-            if len(image_array[x].shape) == 2: image_array[x] = cv2.cvtColor(image_array[x], cv2.COLOR_GRAY2BGR)                
-        horizontal = np.hstack(image_array)
+                image_array[x] = cv2.resize(image_array[x], (image_array[0].shape[1], image_array[0].shape[0]), None,scale, scale)
+            if len(image_array[x].shape) == 2: image_array[x] = cv2.cvtColor(image_array[x], cv2.COLOR_GRAY2BGR)
+        horizontal= np.hstack(image_array)
         vertical = horizontal
-
     return vertical
