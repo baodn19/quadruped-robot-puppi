@@ -70,7 +70,7 @@ def get_lane_curve(image, display=2):
 if __name__ == "__main__":
     camera = cam.initialize_camera(480, 240)
 
-    initial_trackbar_values = [53, 204, 78, 131]  # Initial values for the trackbars
+    initial_trackbar_values = [209, 240, 209, 201]  # Initial values for the trackbars
     ut.initialize_trackbars(initial_trackbar_values)
     frame_counter = 0
 
