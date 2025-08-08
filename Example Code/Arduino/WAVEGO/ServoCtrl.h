@@ -65,7 +65,7 @@ double WALK_EXTENDED_X  = 16;
 double WALK_EXTENDED_Z  = 25;
 double WALK_SIDE_MAX    = 30;
 double WALK_MASS_ADJUST = 21;
-double STAND_HEIGHT     = 76;
+double STAND_HEIGHT     = 95;
 
 uint8_t WALK_STATUS     = 0;
 float WALK_CYCLE_GLOBAL = 0;    // 0-1.

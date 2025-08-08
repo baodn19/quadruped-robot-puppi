@@ -237,11 +237,44 @@ void setup() {
 
 // main loop.
 void loop() {
-  robotCtrl();
-  allDataUpdate();
-  wireDebugDetect();
-}
+  // robotCtrl();
+  // allDataUpdate();
+  // wireDebugDetect();
+  while(1) {
+    // Crouch
+    for(float i = 0; i<=1; i+=0.01){
+      gestureUD -= gestureSpeed;
+      pitchYawRollHeightCtrl(gestureUD, gestureLR, 0, 0);
 
+      GoalPosAll();
+      delay(4);
+    }
+
+    // Walk
+    delay(500);
+    if(GLOBAL_STEP > 1){GLOBAL_STEP = 0;}
+    for(float i = 0; i<=1; i+=0.01){
+      gaitTypeCtrl(GLOBAL_STEP, 0, 0);
+
+      GoalPosAll();
+      GLOBAL_STEP += STEP_ITERATE;
+      delay(STEP_DELAY);
+    }
+
+    delay(500);
+
+    // Return
+    for(float i = 0; i<=1; i+=0.01){
+      gestureUD += gestureSpeed;
+      pitchYawRollHeightCtrl(gestureUD, gestureLR, 0, 0);
+
+      GoalPosAll();
+      delay(4);
+    }
+
+    delay(1000);
+  }
+}
 
 
 // <<<<<<<<<<=== Devices on Board ===>>>>>>>>>>>>
