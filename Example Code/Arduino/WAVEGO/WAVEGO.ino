@@ -42,6 +42,7 @@ int CODE_DEBUG = 0;
 // refer to OLED screen display for more detail information.
 extern int moveFB = 0;
 extern int moveLR = 0;
+extern int moveMode = 0;
 extern int debugMode = 0;
 extern int funcMode  = 0;
 float gestureUD = 0;
@@ -252,26 +253,18 @@ void loop() {
 
     // Walk
     delay(500);
-    if(GLOBAL_STEP > 1){GLOBAL_STEP = 0;}
     for(float i = 0; i<=1; i+=0.01){
-      gaitTypeCtrl(GLOBAL_STEP, 0, 0);
-
-      GoalPosAll();
-      GLOBAL_STEP += STEP_ITERATE;
-      delay(STEP_DELAY);
+      moveFB = 1;
+      moveMode = 1;
+      robotCtrl();
     }
 
     delay(500);
 
-    // Return
-    for(float i = 0; i<=1; i+=0.01){
-      gestureUD += gestureSpeed;
-      pitchYawRollHeightCtrl(gestureUD, gestureLR, 0, 0);
-
-      GoalPosAll();
-      delay(4);
-    }
-
+    //Return
+    standUp(95);
+    GoalPosAll();
+    
     delay(1000);
   }
 }

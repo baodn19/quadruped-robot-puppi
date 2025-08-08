@@ -550,7 +550,7 @@ void standUp(double cmdInput){
 // when the directionInput > 0, the front point in the gait cycle move away from the middle line of the robot.
 // use the extendedX and extendedZ to adjust the position of the middle point in a wiggle cycle.
 // statusInput used to reduce the WALK_RANGE.
-void singleGaitCtrl(uint8_t LegNum, uint8_t statusInput, float cycleInput, float directionInput, double extendedX, double extendedZ){
+void singleGaitCtrl(uint8_t LegNum, uint8_t statusInput, float cycleInput, float directionInput, double extendedX, double extendedZ, double height=WALK_HEIGHT){
   double rDist;
   double xGait;
   double yGait;
@@ -559,19 +559,19 @@ void singleGaitCtrl(uint8_t LegNum, uint8_t statusInput, float cycleInput, float
 
   if(cycleInput < (1 - WALK_LIFT_PROP)){
     if(cycleInput <= (WALK_ACC/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP)){
-      yGait = (WALK_HEIGHT - WALK_LIFT) + cycleInput/(1-WALK_LIFT_PROP-((WALK_ACC+WALK_RANGE*statusInput)/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP))*WALK_LIFT;
+      yGait = (height - WALK_LIFT) + cycleInput/(1-WALK_LIFT_PROP-((WALK_ACC+WALK_RANGE*statusInput)/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP))*WALK_LIFT;
     }
     else if(cycleInput > (WALK_ACC/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP) && cycleInput <= ((WALK_ACC + WALK_RANGE*statusInput)/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP)){
-      yGait = WALK_HEIGHT;
+      yGait = height;
     }
     else if(cycleInput > ((WALK_ACC + WALK_RANGE*statusInput)/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP) && cycleInput < ((WALK_ACC*2 + WALK_RANGE*statusInput)/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP)){
-      yGait = WALK_HEIGHT - ((cycleInput-((WALK_ACC + WALK_RANGE*statusInput)/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP))/((WALK_ACC/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP)))*WALK_LIFT;
+      yGait = height - ((cycleInput-((WALK_ACC + WALK_RANGE*statusInput)/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP))/((WALK_ACC/(WALK_ACC*2 + WALK_RANGE*statusInput))*(1-WALK_LIFT_PROP)))*WALK_LIFT;
     }
 
     rDist = (WALK_RANGE*statusInput/2 + WALK_ACC) - (cycleInput/(1 - WALK_LIFT_PROP))*(WALK_RANGE*statusInput + WALK_ACC*2);
   }
   else if(cycleInput >= (1 - WALK_LIFT_PROP)){
-    yGait = WALK_HEIGHT - WALK_LIFT;
+    yGait = height - WALK_LIFT;
     rDist = - (WALK_RANGE*statusInput/2 + WALK_ACC) + ((cycleInput-(1-WALK_LIFT_PROP))/WALK_LIFT_PROP)*(WALK_RANGE*statusInput + WALK_ACC*2);
   }
 
@@ -585,7 +585,7 @@ void singleGaitCtrl(uint8_t LegNum, uint8_t statusInput, float cycleInput, float
 // GlobalInput changes between 0-1.
 // use directionAngle to ctrl the direction.
 // turnCmd-> -1:left 1:right
-void simpleGait(float GlobalInput, float directionAngle, int turnCmd){
+void simpleGait(float GlobalInput, float directionAngle, int turnCmd, int mode){
   float Group_A;
   float Group_B;
 
@@ -593,27 +593,55 @@ void simpleGait(float GlobalInput, float directionAngle, int turnCmd){
   Group_B = GlobalInput+0.5;
   if(Group_B>1){Group_B--;}
 
-  if(!turnCmd){
-    singleGaitCtrl(1, 1, Group_A, directionAngle,  WALK_EXTENDED_X, WALK_EXTENDED_Z);
-    singleGaitCtrl(4, 1, Group_A, -directionAngle, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
+  switch(mode) {
+    case 0:
+      if(!turnCmd){
+        singleGaitCtrl(1, 1, Group_A, directionAngle,  WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(4, 1, Group_A, -directionAngle, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
 
-    singleGaitCtrl(2, 1, Group_B, directionAngle, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
-    singleGaitCtrl(3, 1, Group_B, -directionAngle, WALK_EXTENDED_X, WALK_EXTENDED_Z);
-  }
-  else if(turnCmd == -1){
-    singleGaitCtrl(1, 1.5, Group_A, 90,  WALK_EXTENDED_X, WALK_EXTENDED_Z);
-    singleGaitCtrl(4, 1.5, Group_A, 90, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(2, 1, Group_B, directionAngle, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(3, 1, Group_B, -directionAngle, WALK_EXTENDED_X, WALK_EXTENDED_Z);
+      }
+      else if(turnCmd == -1){
+        singleGaitCtrl(1, 1.5, Group_A, 90,  WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(4, 1.5, Group_A, 90, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
 
-    singleGaitCtrl(2, 1.5, Group_B, -90, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
-    singleGaitCtrl(3, 1.5, Group_B, -90, WALK_EXTENDED_X, WALK_EXTENDED_Z);
-  }
-  else if(turnCmd == 1){
-    singleGaitCtrl(1, 1.5, Group_A, -90,  WALK_EXTENDED_X, WALK_EXTENDED_Z);
-    singleGaitCtrl(4, 1.5, Group_A, -90, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(2, 1.5, Group_B, -90, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(3, 1.5, Group_B, -90, WALK_EXTENDED_X, WALK_EXTENDED_Z);
+      }
+      else if(turnCmd == 1){
+        singleGaitCtrl(1, 1.5, Group_A, -90,  WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(4, 1.5, Group_A, -90, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
 
-    singleGaitCtrl(2, 1.5, Group_B, 90, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
-    singleGaitCtrl(3, 1.5, Group_B, 90, WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(2, 1.5, Group_B, 90, -WALK_EXTENDED_X, WALK_EXTENDED_Z);
+        singleGaitCtrl(3, 1.5, Group_B, 90, WALK_EXTENDED_X, WALK_EXTENDED_Z);
+      }
+      break;
+    case 1:
+      if(!turnCmd){
+        singleGaitCtrl(1, 1, Group_A, directionAngle,  WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[1]);
+        singleGaitCtrl(4, 1, Group_A, -directionAngle, -WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[10]);
+
+        singleGaitCtrl(2, 1, Group_B, directionAngle, -WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[4]);
+        singleGaitCtrl(3, 1, Group_B, -directionAngle, WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[7]);
+      }
+      else if(turnCmd == -1){
+        singleGaitCtrl(1, 1.5, Group_A, 90,  WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[1]);
+        singleGaitCtrl(4, 1.5, Group_A, 90, -WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[10]);
+
+        singleGaitCtrl(2, 1.5, Group_B, -90, -WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[4]);
+        singleGaitCtrl(3, 1.5, Group_B, -90, WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[7]);
+      }
+      else if(turnCmd == 1){
+        singleGaitCtrl(1, 1.5, Group_A, -90,  WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[1]);
+        singleGaitCtrl(4, 1.5, Group_A, -90, -WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[10]);
+
+        singleGaitCtrl(2, 1.5, Group_B, 90, -WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[4]);
+        singleGaitCtrl(3, 1.5, Group_B, 90, WALK_EXTENDED_X, WALK_EXTENDED_Z, legPosBuffer[7]);
+      }
+      break;
   }
+  
 }
 
 
@@ -684,9 +712,12 @@ void triangularGait(float GlobalInput, float directionAngle, int turnCmd){
 
 
 // Gait Select
-void gaitTypeCtrl(float GlobalStepInput, float directionCmd, int turnCmd){
+// Mode:
+//  0: normal (4 legs on same height)
+//  1: crouch walking (2 lower front legs and 2 higher back legs)
+void gaitTypeCtrl(float GlobalStepInput, float directionCmd, int turnCmd, int mode){
   if(GAIT_TYPE == 0){
-    simpleGait(GlobalStepInput, directionCmd, turnCmd);
+    simpleGait(GlobalStepInput, directionCmd, turnCmd, mode);
   }
   else if(GAIT_TYPE == 1){
     triangularGait(GlobalStepInput, directionCmd, turnCmd);
@@ -1013,14 +1044,14 @@ void robotCtrl(){
       gestureUD = 0;
       gestureLR = 0;
       if(GLOBAL_STEP > 1){GLOBAL_STEP = 0;}
-      if(moveFB == 1 && moveLR == 0){gaitTypeCtrl(GLOBAL_STEP, 0, 0);}
-      else if(moveFB == -1 && moveLR == 0){gaitTypeCtrl(GLOBAL_STEP, 180, 0);}
-      else if(moveFB == 1 && moveLR == -1){gaitTypeCtrl(GLOBAL_STEP, 30, 0);}
-      else if(moveFB == 1 && moveLR == 1){gaitTypeCtrl(GLOBAL_STEP, -30, 0);}
-      else if(moveFB == -1 && moveLR == 1){gaitTypeCtrl(GLOBAL_STEP, -120, 0);}
-      else if(moveFB == -1 && moveLR == -1){gaitTypeCtrl(GLOBAL_STEP, 120, 0);}
-      else if(moveFB == 0 && moveLR == -1){gaitTypeCtrl(GLOBAL_STEP, 0, -1);}
-      else if(moveFB == 0 && moveLR == 1){gaitTypeCtrl(GLOBAL_STEP, 0, 1);}
+      if(moveFB == 1 && moveLR == 0){gaitTypeCtrl(GLOBAL_STEP, 0, 0, moveMode);}
+      else if(moveFB == -1 && moveLR == 0){gaitTypeCtrl(GLOBAL_STEP, 180, 0, moveMode);}
+      else if(moveFB == 1 && moveLR == -1){gaitTypeCtrl(GLOBAL_STEP, 30, 0, moveMode);}
+      else if(moveFB == 1 && moveLR == 1){gaitTypeCtrl(GLOBAL_STEP, -30, 0, moveMode);}
+      else if(moveFB == -1 && moveLR == 1){gaitTypeCtrl(GLOBAL_STEP, -120, 0, moveMode);}
+      else if(moveFB == -1 && moveLR == -1){gaitTypeCtrl(GLOBAL_STEP, 120, 0, moveMode);}
+      else if(moveFB == 0 && moveLR == -1){gaitTypeCtrl(GLOBAL_STEP, 0, -1, moveMode);}
+      else if(moveFB == 0 && moveLR == 1){gaitTypeCtrl(GLOBAL_STEP, 0, 1, moveMode);}
       GoalPosAll();
       GLOBAL_STEP += STEP_ITERATE;
       delay(STEP_DELAY);
