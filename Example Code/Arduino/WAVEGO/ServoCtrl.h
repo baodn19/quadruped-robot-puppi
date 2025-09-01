@@ -1029,11 +1029,20 @@ void robotCtrl(){
   // move ctrl.
   if(!debugMode && !funcMode){
     if(moveFB == 0 && moveLR == 0 && STAND_STILL == 0){
-      standMassCenter(0, 0);
-      GoalPosAll();
-      STAND_STILL = 1;
-      GLOBAL_STEP = 0;
-      delay(STEP_DELAY);
+      // standMassCenter(0, 0);
+      // GoalPosAll();
+      // STAND_STILL = 1;
+      // GLOBAL_STEP = 0;
+      // delay(STEP_DELAY);
+
+      // Crouch
+      for(float i = 0; i<=1; i+=0.01){
+        gestureUD -= gestureSpeed;
+        pitchYawRollHeightCtrl(gestureUD, gestureLR, 0, 0);
+
+        GoalPosAll();
+        delay(STEP_DELAY);
+      }
     }
     else if(moveFB == 0 && moveLR == 0 && STAND_STILL == 1){
       GoalPosAll();

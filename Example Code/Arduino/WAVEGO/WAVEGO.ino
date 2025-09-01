@@ -237,36 +237,38 @@ void setup() {
 
 
 // main loop.
-void loop() {
-  // robotCtrl();
-  // allDataUpdate();
-  // wireDebugDetect();
-  while(1) {
-    // Crouch
-    for(float i = 0; i<=1; i+=0.01){
-      gestureUD -= gestureSpeed;
-      pitchYawRollHeightCtrl(gestureUD, gestureLR, 0, 0);
+void loop() { 
+  robotCtrl();
+  allDataUpdate();
+  wireDebugDetect();
 
-      GoalPosAll();
-      delay(4);
-    }
+  // // Testing code for WAVEGO
+  // while(1) {
+  //   // Crouch
+  //   for(float i = 0; i<=1; i+=0.01){
+  //     gestureUD -= gestureSpeed;
+  //     pitchYawRollHeightCtrl(gestureUD, gestureLR, 0, 0);
 
-    // Walk
-    delay(500);
-    for(float i = 0; i<=1; i+=0.01){
-      moveFB = 1;
-      moveMode = 1;
-      robotCtrl();
-    }
+  //     GoalPosAll();
+  //     delay(4);
+  //   }
 
-    delay(500);
+  //   // Walk
+  //   delay(500);
+  //   for(float i = 0; i<=1; i+=0.01){
+  //     moveFB = 1;
+  //     moveMode = 1;
+  //     robotCtrl();
+  //   }
 
-    //Return
-    standUp(95);
-    GoalPosAll();
+  //   delay(500);
+
+  //   //Return
+  //   standUp(95);
+  //   GoalPosAll();
     
-    delay(1000);
-  }
+  //   delay(1000);
+  // }
 }
 
 
