@@ -1,6 +1,7 @@
 # My WAVEGO essential information
 - SSH into Raspberry Pi: `ssh baodn19@<IP>`
 - Control address: 192.168.4.1
+- Use ESP32 library version 1.0.6
 
 # Core Functions
 ## Control basic movement with ESP32:
