@@ -13,13 +13,9 @@
 
 <table>
   <tr>
-    <td><a href="https://youtube.com/shorts/zSF6cKLQlCA?feature=share" title="PupPi Showcasing"><img src="https://github.com/commaai/openpilot/assets/8762862/2f7112ae-f748-4f39-b617-fabd689c3772"></a></td>
-    <td><a href="https://youtu.be/VHKyqZ7t8Gw" title="Video By Logan LeGrand"><img src="https://github.com/commaai/openpilot/assets/8762862/92351544-2833-40d7-9e0b-7ef7ae37ec4c"></a></td>
-    <td><a href="https://youtu.be/SUIZYzxtMQs" title="A drive to Taco Bell"><img src="https://github.com/commaai/openpilot/assets/8762862/05ceefc5-2628-439c-a9b2-89ce77dc6f63"></a></td>
+    <td><a href="https://youtube.com/shorts/zSF6cKLQlCA?feature=share" title="PupPi Showcasing"><img src="https://github.com/baodn19/quadruped-robot-puppi/blob/main/Asset/PupPi_showcase.jpg"></a></td>
   </tr>
 </table>
-
-- SSH into Raspberry Pi: `ssh baodn19@<IP>`
 
 # Core Functions
 ## Control basic movement with ESP32:
