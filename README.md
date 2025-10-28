@@ -17,6 +17,12 @@
   </tr>
 </table>
 
+# Hardware:
+- SBC: Raspberry Pi 4 4GB RAM
+- MCU: ESP32
+- Camera: 5MP wide-angle
+- Servo: FT90M 
+
 # Project Roadmap:
 1. Use computer vision to make the robot follow the closest person
 2. Sync the robot to the simulation
