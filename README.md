@@ -24,5 +24,6 @@
 - Servo: FT90M 
 
 # Project Roadmap:
-1. Use computer vision to make the robot follow the closest person
-2. Sync the robot to the simulation
+1. Follow the black line and map the surround in the process
+2. Use computer vision to make the robot follow the closest person
+3. Sync the robot to the simulation
